@@ -1,6 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
+const rateLimit = require('express-rate-limit');
 
 dotenv.config();
 
@@ -11,8 +12,14 @@ app.use(cors({
     origin: '*' // Replace with your allowed origin
   }));
 
-// Middleware, um JSON-Daten zu parsen
+
 app.use(express.json());
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 15, 
+  message: 'Too many requests from this IP, please try again after 15 minutes'
+});
 
 // Importiere die Routen
 const indexRouter = require('./routes/index');
