@@ -21,6 +21,8 @@ const limiter = rateLimit({
   message: 'Too many requests from this IP, please try again after 15 minutes'
 });
 
+app.use(limiter);
+
 // Importiere die Routen
 const indexRouter = require('./routes/index');
 app.use('/api', indexRouter);
